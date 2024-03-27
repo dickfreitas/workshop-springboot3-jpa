@@ -3,6 +3,8 @@ package com.iniciandospring.projectspringboot.entities;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -16,6 +18,18 @@ public class User implements Serializable {
     private String email;
     private String phone;
     private String password;
+
+    /*
+    Assosciando aqui o Um para muitos ligando ao client
+    que esta na classe Orders utilizando o mappedBy
+    para o Jpa fazer a assosciação das duas classes na coluna
+    do banco de dados
+     */
+    @OneToMany(mappedBy = "client")
+
+    private List<Order> orders = new ArrayList<>();
+
+
 
     public User() {
     }
@@ -66,6 +80,10 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
     }
 
     @Override
