@@ -22,6 +22,10 @@ public class UserService {
     @Autowired
     private UserRepository repository;
 
+    public UserService(UserRepository repository) {
+        this.repository = repository;
+    }
+
     public List<User> findAll(){
         return  repository.findAll();
     }

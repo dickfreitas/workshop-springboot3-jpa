@@ -1,5 +1,6 @@
 package com.iniciandospring.projectspringboot.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -25,8 +26,10 @@ public class User implements Serializable {
     para o Jpa fazer a assosciação das duas classes na coluna
     do banco de dados
      */
+    // Se colocar aqui o jsonignore, na requisição ira trazer apenas os clientes, sem os pedidos juntos
+    //Se nao colocar ira trazer os clientes e os seus pedidos feitos. Isso tbm serve la na classe Order
+    @JsonIgnore
     @OneToMany(mappedBy = "client")
-
     private List<Order> orders = new ArrayList<>();
 
 
