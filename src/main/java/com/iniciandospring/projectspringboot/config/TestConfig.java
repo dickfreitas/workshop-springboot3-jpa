@@ -51,12 +51,26 @@ public class TestConfig implements CommandLineRunner {
         Product product2 = new Product(null , "Smart TV" , "LOREM IPSUN" , 2190.0, "");
         Product product3 = new Product(null , "PC gamer" , "LOREM IPSUN" , 1250.0, "");
 
+        //Populando category e product
+        categoryRepository.saveAll(Arrays.asList(category1,category2,category3));
+        productRepository.saveAll(Arrays.asList(product1 , product2 , product3));
+
+        //ASSOSCIAÇÃO DOS PRODUTOS COM AS CATEGORIAS
+        product1.getCategories().add(category2);
+        product2.getCategories().add(category3);
+        product2.getCategories().add(category1);
+        product3.getCategories().add(category1);
+        product3.getCategories().add(category2);
+
+        productRepository.saveAll(Arrays.asList(product1 , product2 , product3));
+        
+
+
+
 
         //POPULANDO AS DUAS INFORMAÇÕES NO BANCO DE DADOS
         userRepository.saveAll(Arrays.asList(user1 , user2));
         orderRepository.saveAll(Arrays.asList(o1,o2,o3));
-        categoryRepository.saveAll(Arrays.asList(category1,category2,category3));
-        productRepository.saveAll(Arrays.asList(product1 , product2 , product3));   
 
     }
 }
