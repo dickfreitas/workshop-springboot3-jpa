@@ -63,7 +63,7 @@ public class TestConfig implements CommandLineRunner {
         product3.getCategories().add(category2);
 
         productRepository.saveAll(Arrays.asList(product1 , product2 , product3));
-        
+
 
 
 
