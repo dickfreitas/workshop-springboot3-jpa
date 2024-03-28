@@ -27,7 +27,11 @@ public class Product implements Serializable {
     joinColumns = @JoinColumn(name = "product_id"),
     inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories = new HashSet<>();
-
+    /*
+    Aqui vai seguir a mesma ideia do Order
+     */
+    @OneToMany(mappedBy = "id.product")
+    private Set<OrderItem> items = new HashSet<>();
     public Product(){}
 
     public Product(Long id, String name, String description, Double price, String img_url) {
@@ -80,6 +84,17 @@ public class Product implements Serializable {
 
     public void setImg_url(String img_url) {
         this.img_url = img_url;
+    }
+
+    @JsonIgnore
+    public Set<Order> getOrders(){
+        Set<Order> set = new HashSet<>();
+
+        for (OrderItem item : items){
+            set.add(item.getOrder());
+        }
+
+        return set;
     }
 
     @Override
