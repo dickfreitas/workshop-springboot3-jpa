@@ -1,10 +1,7 @@
 package com.iniciandospring.projectspringboot.config;
 
-import com.iniciandospring.projectspringboot.entities.Category;
+import com.iniciandospring.projectspringboot.entities.*;
 import com.iniciandospring.projectspringboot.entities.Order;
-import com.iniciandospring.projectspringboot.entities.OrderItem;
-import com.iniciandospring.projectspringboot.entities.Product;
-import com.iniciandospring.projectspringboot.entities.User;
 import com.iniciandospring.projectspringboot.entities.enums.OrderStatus;
 import com.iniciandospring.projectspringboot.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +73,11 @@ public class TestConfig implements CommandLineRunner {
         OrderItem item4 = new OrderItem(o3 , product1 , 2 , product1.getPrice());
 
         orderItemRepository.saveAll(Arrays.asList(item1 , item2 , item3 , item4));
+
+        Payment pay1 = new Payment(null , Instant.parse("2019-06-20T21:53:07Z") , o1);
+        o1.setPayment(pay1);
+
+        orderRepository.save(o1);
 
 
     }
