@@ -1,6 +1,7 @@
 package com.iniciandospring.projectspringboot.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.iniciandospring.projectspringboot.entities.enums.OrderStatus;
 import jakarta.persistence.*;
 
 import javax.xml.crypto.Data;
@@ -19,6 +20,15 @@ public class Order implements Serializable {
     //FORMATA O PADRAO QUE IRA PARA O BANCO DE DADOS O MOMENTO DO PEDIDO
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'",timezone = "GMT")
     private Instant moment;
+    private Integer orderStatus;
+
+    public Order(Long id, Instant moment, OrderStatus orderStatus, User client) {
+        this.id = id;
+        this.moment = moment;
+        setOrderStatus(orderStatus);
+        this.client = client;
+    }
+
     //Informando o JPA que essa vai ser mts para um
     //E colocando a qual coluna pertence o usuario, que no caso é o client_id
     @ManyToOne
@@ -48,7 +58,20 @@ public class Order implements Serializable {
     public void setMoment(Instant moment) {
         this.moment = moment;
     }
+    public OrderStatus getOrderStatus() {
+    /*
+    Pega o valor Inteiro e manda para o enum para que seja implementado
+    tudo aquilo que fizemos no enum e retornar o OrderStatus referente ao numero
+     */
+        return OrderStatus.valueOf(orderStatus);
+    }
 
+    public void setOrderStatus(OrderStatus orderStatus) {
+        if (orderStatus !=null){
+            this.orderStatus = orderStatus.getCode();
+        }
+
+    }
     public User getClient() {
         return client;
     }
