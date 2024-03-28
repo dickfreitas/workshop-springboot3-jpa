@@ -2,10 +2,12 @@ package com.iniciandospring.projectspringboot.config;
 
 import com.iniciandospring.projectspringboot.entities.Category;
 import com.iniciandospring.projectspringboot.entities.Order;
+import com.iniciandospring.projectspringboot.entities.Product;
 import com.iniciandospring.projectspringboot.entities.User;
 import com.iniciandospring.projectspringboot.entities.enums.OrderStatus;
 import com.iniciandospring.projectspringboot.repositories.CategoryRepository;
 import com.iniciandospring.projectspringboot.repositories.OrderRepository;
+import com.iniciandospring.projectspringboot.repositories.ProductRepository;
 import com.iniciandospring.projectspringboot.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -29,6 +31,8 @@ public class TestConfig implements CommandLineRunner {
 
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private ProductRepository productRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -43,10 +47,16 @@ public class TestConfig implements CommandLineRunner {
         Category category2 = new Category(null , "Books");
         Category category3 = new Category(null , "Computers");
 
+        Product product1 = new Product(null , "The Lord of Rings" , "LOREM IPSUN" , 90.3, "");
+        Product product2 = new Product(null , "Smart TV" , "LOREM IPSUN" , 2190.0, "");
+        Product product3 = new Product(null , "PC gamer" , "LOREM IPSUN" , 1250.0, "");
+
+
         //POPULANDO AS DUAS INFORMAÇÕES NO BANCO DE DADOS
         userRepository.saveAll(Arrays.asList(user1 , user2));
         orderRepository.saveAll(Arrays.asList(o1,o2,o3));
         categoryRepository.saveAll(Arrays.asList(category1,category2,category3));
+        productRepository.saveAll(Arrays.asList(product1 , product2 , product3));   
 
     }
 }

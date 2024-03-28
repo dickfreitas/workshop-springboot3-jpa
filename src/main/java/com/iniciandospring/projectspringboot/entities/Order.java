@@ -21,6 +21,9 @@ public class Order implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'",timezone = "GMT")
     private Instant moment;
     private Integer orderStatus;
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private User client;
 
     public Order(Long id, Instant moment, OrderStatus orderStatus, User client) {
         this.id = id;
@@ -31,9 +34,7 @@ public class Order implements Serializable {
 
     //Informando o JPA que essa vai ser mts para um
     //E colocando a qual coluna pertence o usuario, que no caso é o client_id
-    @ManyToOne
-    @JoinColumn(name = "client_id")
-    private User client;
+
 
     public Order() {}
 
