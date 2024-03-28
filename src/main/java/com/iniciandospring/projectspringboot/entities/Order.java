@@ -1,13 +1,16 @@
 package com.iniciandospring.projectspringboot.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.iniciandospring.projectspringboot.entities.enums.OrderStatus;
 import jakarta.persistence.*;
 
 import javax.xml.crypto.Data;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 
 @Entity
@@ -21,9 +24,14 @@ public class Order implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'",timezone = "GMT")
     private Instant moment;
     private Integer orderStatus;
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "client_id")
     private User client;
+
+    //Usa o id.order pq na classe OrderItem tem 2 assosciações de id
+    //E ao usar dessa maneira, ele vai pegar o id somente do order
+    @OneToMany(mappedBy = "id.order")
+    private Set<OrderItem> items = new HashSet<>();
 
     public Order(Long id, Instant moment, OrderStatus orderStatus, User client) {
         this.id = id;
@@ -79,6 +87,10 @@ public class Order implements Serializable {
 
     public void setClient(User client) {
         this.client = client;
+    }
+
+    public Set<OrderItem> getItems(){
+        return items;
     }
 
     @Override

@@ -2,13 +2,11 @@ package com.iniciandospring.projectspringboot.config;
 
 import com.iniciandospring.projectspringboot.entities.Category;
 import com.iniciandospring.projectspringboot.entities.Order;
+import com.iniciandospring.projectspringboot.entities.OrderItem;
 import com.iniciandospring.projectspringboot.entities.Product;
 import com.iniciandospring.projectspringboot.entities.User;
 import com.iniciandospring.projectspringboot.entities.enums.OrderStatus;
-import com.iniciandospring.projectspringboot.repositories.CategoryRepository;
-import com.iniciandospring.projectspringboot.repositories.OrderRepository;
-import com.iniciandospring.projectspringboot.repositories.ProductRepository;
-import com.iniciandospring.projectspringboot.repositories.UserRepository;
+import com.iniciandospring.projectspringboot.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -33,6 +31,8 @@ public class TestConfig implements CommandLineRunner {
     private CategoryRepository categoryRepository;
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private OrderItemRepository orderItemRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -65,12 +65,18 @@ public class TestConfig implements CommandLineRunner {
         productRepository.saveAll(Arrays.asList(product1 , product2 , product3));
 
 
-
-
-
         //POPULANDO AS DUAS INFORMAÇÕES NO BANCO DE DADOS
         userRepository.saveAll(Arrays.asList(user1 , user2));
         orderRepository.saveAll(Arrays.asList(o1,o2,o3));
+
+        //CRIANDO OS PEDIDOS
+        OrderItem item1 = new OrderItem(o1 , product1 , 2 , product1.getPrice());
+        OrderItem item2 = new OrderItem(o1 , product3 , 5 , product3.getPrice());
+        OrderItem item3 = new OrderItem(o2 , product2 , 3 , product2.getPrice());
+        OrderItem item4 = new OrderItem(o3 , product1 , 2 , product1.getPrice());
+
+        orderItemRepository.saveAll(Arrays.asList(item1 , item2 , item3 , item4));
+
 
     }
 }
