@@ -3,6 +3,7 @@ package com.iniciandospring.projectspringboot.services;
 
 import com.iniciandospring.projectspringboot.entities.User;
 import com.iniciandospring.projectspringboot.repositories.UserRepository;
+import com.iniciandospring.projectspringboot.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -32,7 +33,8 @@ public class UserService {
 
     public User findById(Long id){
         Optional<User> obj = repository.findById(id);
-        return  obj.get();
+//       //O orElseThrow ele faz o get no objeto se caso n tenha ele ja lança a excessao
+        return  obj.orElseThrow(()->new ResourceNotFoundException(id));
 
     }
 
