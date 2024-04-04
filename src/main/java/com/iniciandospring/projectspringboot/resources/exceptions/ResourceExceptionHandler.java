@@ -1,5 +1,6 @@
 package com.iniciandospring.projectspringboot.resources.exceptions;
 
+import com.iniciandospring.projectspringboot.services.exceptions.DatabaseExceptions;
 import com.iniciandospring.projectspringboot.services.exceptions.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -19,5 +20,17 @@ public class ResourceExceptionHandler {
 
         return ResponseEntity.status(status).body(stardard);
     }
+
+
+    @ExceptionHandler(DatabaseExceptions.class)
+    public ResponseEntity<StandardError> database(DatabaseExceptions e , HttpServletRequest request){
+        String error = "Database Error";
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        StandardError standard = new StandardError(Instant.now() , status.value() , error , e.getMessage() , request.getRequestURI());
+
+        return ResponseEntity.status(status).body(standard);
+    }
+
+
 
 }

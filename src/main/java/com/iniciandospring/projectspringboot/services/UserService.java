@@ -3,8 +3,11 @@ package com.iniciandospring.projectspringboot.services;
 
 import com.iniciandospring.projectspringboot.entities.User;
 import com.iniciandospring.projectspringboot.repositories.UserRepository;
+import com.iniciandospring.projectspringboot.services.exceptions.DatabaseExceptions;
 import com.iniciandospring.projectspringboot.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -43,7 +46,15 @@ public class UserService {
     }
 
     public void delete(Long id){
-        repository.deleteById(id);
+        try{
+            repository.deleteById(id);
+
+        }catch (EmptyResultDataAccessException e ){
+            throw new ResourceNotFoundException(id);
+        }catch (DataIntegrityViolationException e ){
+        // Aqui é para fazer uma excessao caso desejem apagar um usuario que tenha um pedido vinculado
+            throw new DatabaseExceptions(e.getMessage());
+        }
     }
     public User updateUser(Long id , User obj){
         /*
