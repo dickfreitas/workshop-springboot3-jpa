@@ -4,7 +4,9 @@ package com.iniciandospring.projectspringboot.services;
 import com.iniciandospring.projectspringboot.entities.User;
 import com.iniciandospring.projectspringboot.repositories.UserRepository;
 import com.iniciandospring.projectspringboot.services.exceptions.DatabaseExceptions;
+import com.iniciandospring.projectspringboot.services.exceptions.EntityNotFoundExceptions;
 import com.iniciandospring.projectspringboot.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -62,10 +64,16 @@ public class UserService {
         ele prepara o id monitorado, para que dps va para o banco de dados
         diferente do find
          */
-        User entity = repository.getReferenceById(id);
+        try{
+            User entity = repository.getReferenceById(id);
 
-        updateData(entity , obj);
-        return  repository.save(entity);
+            updateData(entity , obj);
+            return  repository.save(entity);
+        }catch (EntityNotFoundException e){
+            throw new EntityNotFoundExceptions(e.getMessage());
+
+        }
+
     }
 
     private void updateData(User entity, User obj) {
