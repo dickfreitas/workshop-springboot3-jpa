@@ -19,6 +19,8 @@ public class CategoryService {
         return repository.findAll();
     }
 
+    public Category insertCategory(Category obj){return repository.save(obj);}
+
     public Category fIndById(Long id){
         Optional<Category> obj = repository.findById(id);
         return obj.get();

@@ -20,6 +20,10 @@ public class ProductService {
         return repository.findAll();
     }
 
+    public Product insertProd(Product obj){
+        return  repository.save(obj);
+    }
+
     public Product findById(Long id){
         Optional<Product> obj = repository.findById(id);
         return obj.get();
